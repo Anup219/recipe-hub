@@ -2,7 +2,7 @@
 
 A modern, full-featured recipe discovery and meal planning web app built with React, TypeScript, and Firebase.
 
-> Original Figma design: [Recipe Web Application](https://www.figma.com/design/W6qBYzk6hkgHdGYQmG4Vzv/Recipe-Web-Application)
+
 
 ---
 
