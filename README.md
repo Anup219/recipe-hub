@@ -6,6 +6,23 @@ A modern, full-featured recipe discovery and meal planning web app built with Re
 visit here--->>> https://recipe-hub.anupchowdhury219.workers.dev/
 ---
 
+## 📸 App Screenshots
+
+| Landing Page | Login Screen |
+| :---: | :---: |
+| ![Landing Page](./screenshots/landing.jpg) | ![Login Screen](./screenshots/login.jpg) |
+
+| Recipe Browsing | Instructions |
+| :---: | :---: |
+| ![Recipe Browsing](./screenshots/browse.jpg) | ![Instructions](./screenshots/instructions.jpg) |
+
+| Nutrition Analysis |
+| :---: |
+| ![Nutrition Analysis](./screenshots/nutrition.jpg) |
+
+---
+
+
 ## 🚀 Getting Started
 
 ```bash
