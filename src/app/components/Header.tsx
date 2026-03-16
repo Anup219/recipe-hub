@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
-import { ChefHat, Moon, Sun, User, LogOut, Heart, BookOpen, CalendarDays, ShoppingCart, PlusCircle, Menu, X } from 'lucide-react';
+import { ChefHat, Moon, Sun, User, LogOut, Heart, BookOpen, CalendarDays, ShoppingCart, PlusCircle, Menu, X, Download } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
@@ -32,6 +32,29 @@ export const Header: React.FC = () => {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallBtn, setShowInstallBtn] = useState(false);
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallBtn(true);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+      setShowInstallBtn(false);
+    }
+  };
 
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
@@ -106,6 +129,18 @@ export const Header: React.FC = () => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-2">
+            {showInstallBtn && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleInstall}
+                className="rounded-xl hover:bg-accent text-orange-500"
+                title="Download App"
+              >
+                <Download className="h-5 w-5" />
+              </Button>
+            )}
+
             {/* Theme toggle */}
             <Button
               variant="ghost"
@@ -233,7 +268,17 @@ export const Header: React.FC = () => {
               className="rounded-xl"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {showInstallBtn && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleInstall}
+                className="rounded-xl text-orange-500"
+              >
+                <Download className="h-5 w-5" />
+              </Button>
+            )}
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
